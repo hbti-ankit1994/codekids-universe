@@ -969,7 +969,7 @@ const fills=[
     {t:'<span class="kw">ELSE IF</span> score >=',blank:'60',after:':',type:'fill'},
     {t:'&nbsp;&nbsp;SAY <span class="val">"Grade B"</span>',type:'code'},
     {t:'<span class="kw">ELSE</span>:',type:'code'},
-    {t:'&nbsp;&nbsp;SAY <span class="val">"',blank:'Needs work',after:'"</span>',type:'fill'},
+    {t:'&nbsp;&nbsp;SAY <span class="val">"',blank: ['Practice', 'practice', 'Needs More Practice', 'More practice', 'needs more practice', 'Needs more practice'],after:'"</span>',type:'fill'},
   ],hint:'A = 90+, B = 60+, anything else needs more practice.'},
 ];
 let fillIdx=0;
@@ -987,11 +987,30 @@ function loadFill(){
   document.getElementById('r4').className='result';
 }
 function checkFill(){
-  const inputs=document.querySelectorAll('.blank');let all=true;
-  inputs.forEach(inp=>{const ok=inp.value.trim().toLowerCase()===inp.dataset.ans.toLowerCase();inp.classList.toggle('ok',ok);inp.classList.toggle('err',!ok);if(!ok)all=false;});
-  const r=document.getElementById('r4');
-  if(all){r.className='result show win';r.innerHTML='🏆 Perfect! Every blank correct — this algorithm would actually work! +35 XP';xp(35,'✏️ Algorithm complete!');}
-  else{r.className='result show lose';r.innerHTML='❌ Some blanks are wrong (red). Re-read the hint and trace the logic step by step.';}
+  const inputs = document.querySelectorAll('.blank');
+  let all = true;
+  
+  inputs.forEach(inp => {
+    const userVal = inp.value.trim().toLowerCase();
+    
+    // Split the dataset answers by comma, clean them up, and check if userVal is inside
+    const validAnswers = inp.dataset.ans.split(',').map(a => a.trim().toLowerCase());
+    const ok = validAnswers.includes(userVal);
+    
+    inp.classList.toggle('ok', ok);
+    inp.classList.toggle('err', !ok);
+    if(!ok) all = false;
+  });
+  
+  const r = document.getElementById('r4');
+  if(all){
+    r.className = 'result show win';
+    r.innerHTML = '🏆 Perfect! Every blank correct — this algorithm would actually work! +35 XP';
+    xp(35,'✏️ Algorithm complete!');
+  } else {
+    r.className = 'result show lose';
+    r.innerHTML = '❌ Some blanks are wrong (red). Re-read the hint and trace the logic step by step.';
+  }
 }
 function nextFill(){fillIdx=(fillIdx+1)%fills.length;loadFill();}
 loadFill();

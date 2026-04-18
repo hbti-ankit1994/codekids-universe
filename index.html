@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeKids Universe — Think Like a Computer!</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0D0D0D; --cream:#FFFBF0;
+  --yellow:#FFD600; --red:#FF2E2E; --blue:#0057FF;
+  --green:#00C853; --purple:#8B00FF; --orange:#FF6B00;
+  --pink:#FF2D78; --cyan:#00D4FF; --white:#FFFFFF;
+  --border:4px solid var(--ink); --border-thick:6px solid var(--ink);
+  --shadow:6px 6px 0 var(--ink); --shadow-lg:10px 10px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,0,0,0.05) 1.5px,transparent 1.5px);background-size:22px 22px;pointer-events:none;z-index:0}
+
+nav{position:sticky;top:0;z-index:200;background:var(--ink);border-bottom:4px solid var(--yellow);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'Bangers',cursive;font-size:28px;letter-spacing:2px;color:var(--yellow);text-decoration:none}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:6px;list-style:none}
+.nav-links a{font-family:'Bangers',cursive;font-size:15px;letter-spacing:1px;padding:5px 12px;border:2px solid rgba(255,255,255,0.25);border-radius:8px;color:rgba(255,255,255,0.8);text-decoration:none;transition:all 0.15s}
+.nav-links a:hover{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+@media(max-width:640px){.nav-links{display:none}}
+
+.hero{position:relative;z-index:1;background:var(--ink);overflow:hidden;padding:80px 24px 70px}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,214,0,0.12) 1px,transparent 1px);background-size:28px 28px}
+.hero-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{display:inline-block;background:var(--yellow);color:var(--ink);font-family:'Bangers',cursive;font-size:15px;letter-spacing:3px;padding:4px 16px;border:3px solid var(--yellow);border-radius:30px;margin-bottom:20px;transform:rotate(-2deg);box-shadow:3px 3px 0 rgba(0,0,0,0.4)}
+.hero h1{font-family:'Bangers',cursive;font-size:clamp(56px,8vw,100px);line-height:0.92;letter-spacing:2px;color:var(--white)}
+.hero h1 .a1{color:var(--yellow);display:block}
+.hero h1 .a2{color:var(--red)}
+.hero-sub{margin-top:20px;font-size:18px;font-weight:700;color:rgba(255,255,255,0.75);line-height:1.6}
+.hero-ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.hero-brain{display:flex;justify-content:center;align-items:center;animation:float 3.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@media(max-width:700px){.hero-inner{grid-template-columns:1fr}.hero-brain{display:none}}
+
+.btn{font-family:'Bangers',cursive;font-size:20px;letter-spacing:1.5px;padding:11px 26px;border:var(--border);border-radius:var(--r);cursor:pointer;text-decoration:none;display:inline-block;transition:transform 0.1s,box-shadow 0.1s;box-shadow:var(--shadow)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn-y{background:var(--yellow);color:var(--ink)}
+.btn-r{background:var(--red);color:var(--white)}
+.btn-b{background:var(--blue);color:var(--white)}
+.btn-g{background:var(--green);color:var(--ink)}
+.btn-w{background:var(--white);color:var(--ink)}
+.btn-p{background:var(--purple);color:var(--white)}
+.btn-sm{font-size:16px;padding:8px 18px}
+
+.ticker{position:relative;z-index:1;background:var(--yellow);border-top:var(--border-thick);border-bottom:var(--border-thick);height:48px;overflow:hidden}
+.ticker-inner{display:flex;align-items:center;height:100%;animation:scroll-x 22s linear infinite;white-space:nowrap}
+@keyframes scroll-x{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{font-family:'Bangers',cursive;font-size:20px;letter-spacing:4px;color:var(--ink);padding:0 24px}
+
+.section{position:relative;z-index:1;padding:64px 24px}
+.section-alt{background:#F0F4FF}
+.section-dark{background:var(--ink)}
+.section-warm{background:#FFF4E8;border-top:var(--border-thick);border-bottom:var(--border-thick)}
+.container{max-width:1080px;margin:0 auto}
+.s-tag{display:inline-block;font-family:'Bangers',cursive;font-size:14px;letter-spacing:2px;padding:4px 14px;border:3px solid var(--ink);border-radius:20px;margin-bottom:12px}
+.s-title{font-family:'Bangers',cursive;font-size:clamp(36px,5.5vw,72px);letter-spacing:2px;line-height:1;margin-bottom:12px}
+.s-sub{font-size:17px;font-weight:700;color:#555;line-height:1.6;max-width:600px}
+.s-head{text-align:center;margin-bottom:48px}
+.s-head .s-sub{margin:12px auto 0}
+
+/* JOURNEY */
+.journey{display:flex;flex-direction:column;gap:0;position:relative;max-width:860px;margin:0 auto}
+.journey::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:6px;background:var(--ink);transform:translateX(-50%)}
+.jstep{display:grid;grid-template-columns:1fr 80px 1fr;align-items:start;padding:24px 0;opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
+.jstep.visible{opacity:1;transform:translateY(0)}
+.j-node{grid-column:2;display:flex;align-items:center;justify-content:center;padding-top:20px;z-index:2}
+.j-dot{width:52px;height:52px;border:var(--border-thick);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--white);box-shadow:var(--shadow);flex-shrink:0}
+.j-card{background:var(--white);border:var(--border-thick);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;transition:transform 0.15s,box-shadow 0.15s}
+.j-card:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg)}
+.j-card-head{padding:16px 20px 12px;border-bottom:var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.j-step-num{font-family:'Bangers',cursive;font-size:13px;letter-spacing:1px;padding:3px 10px;border:3px solid var(--ink);border-radius:20px;white-space:nowrap}
+.j-card-title{font-family:'Bangers',cursive;font-size:26px;letter-spacing:1px}
+.j-card-body{padding:16px 20px}
+.j-card-body p{font-size:14px;font-weight:700;line-height:1.7;color:#444}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{font-size:12px;font-weight:800;padding:3px 10px;border:2px solid var(--ink);border-radius:20px}
+.jstep:nth-child(odd) .j-card{grid-column:1}
+.jstep:nth-child(odd) .j-empty{grid-column:3}
+.jstep:nth-child(even) .j-card{grid-column:3}
+.jstep:nth-child(even) .j-empty{grid-column:1}
+@media(max-width:700px){
+  .journey::before{left:20px}
+  .jstep{grid-template-columns:40px 1fr}
+  .jstep:nth-child(odd) .j-card,.jstep:nth-child(even) .j-card{grid-column:2}
+  .jstep:nth-child(odd) .j-empty,.jstep:nth-child(even) .j-empty{display:none}
+  .j-node{grid-column:1;padding-top:16px}
+  .j-dot{width:36px;height:36px;font-size:16px}
+}
+
+/* CONCEPT CARDS */
+.concepts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.cc{background:var(--white);border:var(--border-thick);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;opacity:0;transform:translateY(24px) scale(0.97);transition:opacity 0.45s ease,transform 0.45s ease}
+.cc.visible{opacity:1;transform:translateY(0) scale(1)}
+.cc:hover{transform:translate(-3px,-3px) !important;box-shadow:var(--shadow-lg) !important}
+.cc-head{padding:18px 22px 14px;border-bottom:var(--border);display:flex;align-items:flex-start;gap:14px}
+.cc-icon{width:52px;height:52px;flex-shrink:0;border:3px solid var(--ink);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.cc-lvl{font-size:11px;font-weight:900;letter-spacing:2px;padding:2px 10px;border:2px solid var(--ink);border-radius:20px;display:inline-block;margin-bottom:6px}
+.cc-title{font-family:'Bangers',cursive;font-size:26px;letter-spacing:1px}
+.cc-body{padding:16px 22px}
+.cc-body>p{font-size:14px;font-weight:700;line-height:1.7;color:#444;margin-bottom:14px}
+.vbox{border:3px solid var(--ink);border-radius:12px;padding:14px 16px;margin-bottom:12px;font-size:13px;font-weight:700;line-height:1.8}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;font-size:14px;font-weight:800}
+.fbox{padding:6px 12px;border:3px solid var(--ink);border-radius:8px;font-size:13px;font-weight:800}
+.arrow{font-size:18px;font-weight:900}
+.pseudo{background:var(--ink);color:#E8F4FD;font-family:'Share Tech Mono',monospace;font-size:13px;padding:14px 16px;border-radius:10px;border:3px solid var(--ink);line-height:1.9;margin-bottom:12px}
+.kw{color:#FFD600;font-weight:900}
+.cmt{color:#6C9C8A}
+.val{color:#FF79C6}
+.fn{color:#8BE9FD}
+
+/* AD BANNER */
+.ad-wrap { max-width: 900px; margin: 0 auto; background: var(--purple); border: var(--border-thick); border-radius: 20px; box-shadow: var(--shadow-lg); display: flex; overflow: hidden; position: relative; }
+.ad-left { flex: 1.5; padding: 36px 40px; color: var(--white); display: flex; flex-direction: column; justify-content: center; }
+.ad-tag { display: inline-block; background: var(--pink); color: var(--white); font-family: 'Bangers', cursive; font-size: 16px; padding: 4px 12px; border: 3px solid var(--ink); border-radius: 20px; margin-bottom: 16px; transform: rotate(-2deg); align-self: flex-start; }
+.ad-title { font-family: 'Bangers', cursive; font-size: 52px; letter-spacing: 2px; line-height: 1; margin-bottom: 12px; text-shadow: 4px 4px 0 rgba(0,0,0,0.3); color: var(--yellow); }
+.ad-desc { font-size: 16px; font-weight: 700; line-height: 1.6; color: rgba(255,255,255,0.9); margin-bottom: 24px; }
+.ad-right { flex: 1; background: var(--yellow); border-left: var(--border-thick); display: flex; align-items: center; justify-content: center; position: relative; min-height: 300px; overflow: hidden; }
+.ad-overlay { position: absolute; inset: 0; background: var(--ink); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+.ad-overlay.unlocked { transform: translateY(-100%); }
+.ad-unlock-btn { background: var(--yellow); color: var(--ink); font-family: 'Bangers', cursive; font-size: 20px; letter-spacing: 1px; padding: 12px 24px; border: 4px solid var(--ink); border-radius: 12px; cursor: pointer; box-shadow: 6px 6px 0 rgba(0,0,0,0.5); transition: all 0.1s; text-align: center; }
+.ad-unlock-btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 rgba(0,0,0,0.5); }
+.ad-book-link { text-decoration: none; color: inherit; display: block; transition: transform 0.3s ease; }
+.ad-book-link:hover { transform: scale(1.08) rotate(2deg); }
+.ad-book { width: 150px; height: 210px; background: var(--white); border: 4px solid var(--ink); border-radius: 4px 12px 12px 4px; box-shadow: 12px 12px 0 rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; padding: 12px; }
+.ad-book::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 4px; background: rgba(0,0,0,0.1); }
+@media(max-width: 768px) { .ad-wrap { flex-direction: column; } .ad-right { border-left: none; border-top: var(--border-thick); min-height: 260px; } }
+
+/* QUIZ */
+.quiz-wrap{max-width:720px;margin:0 auto;background:var(--white);border:var(--border-thick);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden}
+.quiz-top{background:var(--red);border-bottom:var(--border);padding:18px 26px;display:flex;align-items:center;justify-content:space-between}
+.quiz-top h3{font-family:'Bangers',cursive;font-size:28px;letter-spacing:1px;color:var(--white);text-shadow:2px 2px 0 rgba(0,0,0,0.3)}
+.quiz-ctr{background:var(--white);border:3px solid var(--ink);border-radius:20px;padding:4px 14px;font-weight:900;font-size:14px}
+.quiz-prog{height:10px;background:#eee;border-bottom:3px solid var(--ink)}
+.quiz-prog-bar{height:100%;background:var(--green);transition:width 0.4s}
+.quiz-inner{padding:26px}
+.q-em{font-size:36px;display:block;margin-bottom:8px}
+.q-text{font-size:21px;font-weight:800;line-height:1.5;margin-bottom:20px}
+.q-opts{display:grid;gap:10px}
+.q-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;border:3px solid var(--ink);border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;background:var(--white);transition:all 0.12s;box-shadow:var(--shadow-sm);text-align:left}
+.q-opt:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);background:#f8f8f8}
+.q-opt.correct{background:#C8F7C5;border-color:var(--green)}
+.q-opt.wrong{background:#FAC5C5;border-color:var(--red)}
+.q-letter{width:34px;height:34px;flex-shrink:0;background:var(--yellow);border:3px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bangers',cursive;font-size:18px}
+.q-fb{margin-top:18px;padding:14px 18px;border:3px solid var(--ink);border-radius:12px;font-weight:800;font-size:15px;line-height:1.6;display:none}
+.q-fb.show{display:block;animation:pop 0.3s ease}
+.q-fb.good{background:#DFFFDA}
+.q-fb.bad{background:#FFE0E0}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:18px;border-top:3px dashed #ddd}
+.score-chip{font-family:'Bangers',cursive;font-size:22px}
+@keyframes pop{0%{transform:scale(0.85);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+
+/* PUZZLES */
+.pz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px;max-width:1080px;margin:0 auto}
+.pz-card{background:var(--white);border:var(--border-thick);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.pz-head{padding:14px 20px;border-bottom:var(--border);display:flex;align-items:center;gap:12px}
+.pz-icon{font-size:32px}
+.pz-title{font-family:'Bangers',cursive;font-size:24px;letter-spacing:1px}
+.pz-diff{font-size:11px;font-weight:900;letter-spacing:2px;padding:2px 10px;border:2px solid var(--ink);border-radius:20px;display:inline-block;margin-top:2px}
+.pz-body{padding:18px 20px}
+.pz-body>p{font-size:14px;font-weight:700;color:#444;line-height:1.6;margin-bottom:14px}
+
+.drag-pool{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#f5f5f5;border:3px dashed #ccc;border-radius:12px;min-height:56px;margin-bottom:10px}
+.drag-zone{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#EEF4FF;border:3px dashed var(--blue);border-radius:12px;min-height:56px;margin-bottom:14px;position:relative}
+.drag-zone::before{content:'Drop here ↓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#aaa;font-size:13px;font-weight:700;pointer-events:none}
+.drag-zone:not(:empty)::before{display:none}
+.dblock{padding:7px 14px;border:3px solid var(--ink);border-radius:10px;font-weight:800;font-size:14px;cursor:grab;box-shadow:var(--shadow-sm);transition:transform 0.1s;user-select:none}
+.dblock:hover{transform:scale(1.06)}
+.dblock:active{cursor:grabbing;opacity:0.6}
+.dblock.used{opacity:0.35;cursor:default;pointer-events:none}
+
+.pat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+.pat-cell{aspect-ratio:1;border:3px solid var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--white)}
+.pat-blank{background:#eee;font-size:22px;color:#888;cursor:default}
+.pat-choices{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.pat-choice{width:54px;height:54px;border:3px solid var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;background:var(--white);transition:transform 0.12s;box-shadow:var(--shadow-sm)}
+.pat-choice:hover{transform:scale(1.12)}
+.pat-choice.picked{background:var(--yellow)}
+
+.fc-story{background:#f8f8f8;border:3px solid var(--ink);border-radius:10px;padding:14px;font-size:14px;font-weight:700;line-height:1.8;margin-bottom:12px}
+.fc-opts{display:grid;gap:8px}
+.fc-opt{padding:10px 14px;border:3px solid var(--ink);border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.12s;background:var(--white);box-shadow:var(--shadow-sm);text-align:left}
+.fc-opt:hover{background:#f0f0f0;transform:translateX(4px)}
+.fc-opt.sel-y{background:#C8F7C5}
+.fc-opt.sel-n{background:#FAC5C5}
+
+.code-fill{background:var(--ink);color:#E8F4FD;font-family:'Share Tech Mono',monospace;font-size:14px;padding:16px;border-radius:12px;border:3px solid var(--ink);line-height:2.2;margin-bottom:12px}
+.blank{background:var(--yellow);color:var(--ink);border:2px solid var(--ink);border-radius:6px;padding:1px 8px;font-family:'Share Tech Mono',monospace;font-size:13px;font-weight:900;text-align:center;outline:none;width:90px}
+.blank:focus{background:#FFE566}
+.blank.ok{background:#C8F7C5}
+.blank.err{background:#FAC5C5}
+
+.result{padding:12px 16px;border:3px solid var(--ink);border-radius:10px;font-weight:800;font-size:14px;display:none;line-height:1.6}
+.result.show{display:block;animation:pop 0.3s ease}
+.result.win{background:#C8F7C5}
+.result.lose{background:#FAC5C5}
+.check-btn{width:100%;padding:12px;cursor:pointer;font-family:'Bangers',cursive;font-size:19px;letter-spacing:1px;border:3px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);transition:transform 0.1s;margin-bottom:8px}
+.check-btn:hover{transform:translateY(-2px)}
+
+/* CHALLENGES */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.ch-card{border:var(--border-thick);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow);cursor:pointer;text-align:center;opacity:0;transform:scale(0.95);transition:opacity 0.4s ease,transform 0.4s ease}
+.ch-card.visible{opacity:1;transform:scale(1)}
+.ch-card:hover{transform:translate(-3px,-3px) !important;box-shadow:var(--shadow-lg) !important}
+.ch-icon{font-size:52px;margin-bottom:12px;display:block}
+.ch-title{font-family:'Bangers',cursive;font-size:24px;letter-spacing:1px;margin-bottom:8px}
+.ch-desc{font-size:13px;font-weight:700;color:#555;line-height:1.5}
+
+/* PARENT */
+.parent-strip{position:relative;z-index:1;background:var(--blue);border-top:var(--border-thick);border-bottom:var(--border-thick);padding:56px 24px}
+.parent-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:960px;margin:0 auto;align-items:center}
+.parent-text h2{font-family:'Bangers',cursive;font-size:52px;color:var(--white);text-shadow:4px 4px 0 rgba(0,0,0,0.3);letter-spacing:2px;margin-bottom:14px}
+.parent-text p{font-size:16px;font-weight:700;color:rgba(255,255,255,0.85);line-height:1.7}
+.feat-list{list-style:none;display:grid;gap:10px}
+.feat-list li{display:flex;align-items:center;gap:10px;padding:11px 16px;border:3px solid rgba(255,255,255,0.5);border-radius:12px;background:rgba(255,255,255,0.15);font-weight:800;color:var(--white);font-size:14px}
+.free-badge{display:inline-block;background:var(--yellow);color:var(--ink);font-family:'Bangers',cursive;font-size:28px;letter-spacing:2px;padding:10px 26px;border:var(--border);border-radius:50px;box-shadow:var(--shadow);margin-bottom:20px;animation:badge-pulse 3s ease-in-out infinite}
+@keyframes badge-pulse{0%,100%{transform:rotate(-2deg) scale(1)}50%{transform:rotate(2deg) scale(1.06)}}
+@media(max-width:680px){.parent-grid{grid-template-columns:1fr;gap:28px}}
+
+footer{position:relative;z-index:1;background:var(--ink);border-top:var(--border-thick);padding:56px 24px 32px}
+.footer-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px}
+.f-brand h3{font-family:'Bangers',cursive;font-size:44px;color:var(--yellow);letter-spacing:2px;text-shadow:3px 3px 0 rgba(0,0,0,0.4);margin-bottom:12px}
+.f-brand p{color:rgba(255,255,255,0.65);font-size:14px;line-height:1.8;font-weight:600}
+footer h4{font-family:'Bangers',cursive;font-size:20px;color:var(--white);letter-spacing:1px;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:10px}
+footer ul li a{color:rgba(255,255,255,0.55);text-decoration:none;font-weight:700;font-size:14px;transition:color 0.15s}
+footer ul li a:hover{color:var(--yellow)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;margin-top:40px;text-align:center;color:rgba(255,255,255,0.35);font-size:13px;font-weight:700}
+@media(max-width:680px){.footer-grid{grid-template-columns:1fr;gap:28px}}
+
+.xp-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--ink);border-top:4px solid var(--yellow);padding:8px 20px;display:flex;align-items:center;gap:12px}
+.xp-label{font-family:'Bangers',cursive;font-size:18px;color:var(--yellow);white-space:nowrap}
+.xp-track{flex:1;max-width:280px;height:12px;background:rgba(255,255,255,0.1);border:2px solid var(--yellow);border-radius:10px;overflow:hidden}
+.xp-fill{height:100%;background:var(--yellow);transition:width 0.5s ease;border-radius:8px}
+.xp-lvl{font-family:'Bangers',cursive;font-size:17px;color:var(--white);white-space:nowrap}
+.xp-stars{font-size:18px;letter-spacing:3px;color:var(--yellow)}
+.xp-popup{position:fixed;bottom:68px;right:18px;z-index:400;background:var(--yellow);border:var(--border);border-radius:12px;padding:10px 18px;font-family:'Bangers',cursive;font-size:20px;box-shadow:var(--shadow);display:none;animation:pop 0.35s ease}
+.bottom-pad{height:56px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#"><span>Code</span>Kids Universe</a>
+  <ul class="nav-links">
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#concepts">Concepts</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#puzzles">Puzzles</a></li>
+    <li><a href="#challenges">Challenges</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">🚀 FREE FOR EVERYONE</div>
+      <h1>THINK<span class="a1">LIKE A</span><span class="a2">COMPUTER.</span></h1>
+      <p class="hero-sub">No ages. No specific languages. Just pure <strong style="color:var(--yellow)">logic</strong> — the superpower behind every app, game, robot and website ever built.</p>
+      <div class="hero-ctas">
+        <a href="#journey" class="btn btn-y">Start the Journey →</a>
+        <a href="#quiz" class="btn btn-w">Take the Quiz 🎯</a>
+        <a href="#puzzles" class="btn btn-r">Solve Puzzles 🧩</a>
+      </div>
+    </div>
+    <div class="hero-brain">
+      <svg width="280" height="300" viewBox="0 0 280 300" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="60" width="160" height="160" rx="30" fill="#FFD600" stroke="#0D0D0D" stroke-width="6"/>
+        <rect x="90" y="100" width="36" height="28" rx="10" fill="white" stroke="#0D0D0D" stroke-width="4"/>
+        <rect x="154" y="100" width="36" height="28" rx="10" fill="white" stroke="#0D0D0D" stroke-width="4"/>
+        <circle cx="108" cy="114" r="10" fill="#0057FF"/>
+        <circle cx="172" cy="114" r="10" fill="#0057FF"/>
+        <circle cx="111" cy="111" r="4" fill="white"/>
+        <circle cx="175" cy="111" r="4" fill="white"/>
+        <path d="M100 158 Q140 182 180 158" stroke="#0D0D0D" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="80" cy="150" r="12" fill="#FF9500" opacity="0.5"/>
+        <circle cx="200" cy="150" r="12" fill="#FF9500" opacity="0.5"/>
+        <line x1="140" y1="60" x2="140" y2="30" stroke="#0D0D0D" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="140" cy="22" r="12" fill="#FF2E2E" stroke="#0D0D0D" stroke-width="4"/>
+        <rect x="80" y="228" width="120" height="54" rx="14" fill="#0057FF" stroke="#0D0D0D" stroke-width="5"/>
+        <rect x="98" y="238" width="84" height="34" rx="8" fill="#0D0D0D"/>
+        <text x="140" y="256" font-family="'Share Tech Mono'" font-size="9" fill="#FFD600" text-anchor="middle">IF x &gt; 0:</text>
+        <text x="140" y="267" font-family="'Share Tech Mono'" font-size="9" fill="#00C853" text-anchor="middle">  THINK! ✓</text>
+        <rect x="24" y="234" width="56" height="20" rx="10" fill="#FFD600" stroke="#0D0D0D" stroke-width="4"/>
+        <rect x="200" y="234" width="56" height="20" rx="10" fill="#FFD600" stroke="#0D0D0D" stroke-width="4"/>
+        <rect x="96" y="282" width="34" height="14" rx="6" fill="#FFD600" stroke="#0D0D0D" stroke-width="3"/>
+        <rect x="150" y="282" width="34" height="14" rx="6" fill="#FFD600" stroke="#0D0D0D" stroke-width="3"/>
+        <rect x="182" y="30" width="92" height="42" rx="12" fill="white" stroke="#0D0D0D" stroke-width="3"/>
+        <text x="228" y="49" font-family="Nunito" font-weight="900" font-size="10" fill="#0D0D0D" text-anchor="middle">Let's think</text>
+        <text x="228" y="61" font-family="Nunito" font-weight="900" font-size="10" fill="#0D0D0D" text-anchor="middle">logically! 🧠</text>
+        <polygon points="198,72 186,82 210,72" fill="white" stroke="#0D0D0D" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:#FFF4E8; border-top:var(--border-thick);">
+  <div class="container">
+    <div class="ad-wrap">
+      <div class="ad-left">
+        <div class="ad-tag">🚀 LEVEL UP OFFLINE!</div>
+        <h2 class="ad-title">Tiny Coders</h2>
+        <p class="ad-desc">
+          Ready to take your computational thinking from the screen to the real world for toddlers? Grab the official handbook packed with unplugged activities, tricky logic puzzles, and epic coding adventures!
+        </p>
+        <div style="color:var(--yellow); font-size:24px; margin-bottom:20px; letter-spacing:2px;">★★★★★</div>
+        <a href="https://amzn.in/d/02kOXjmm" target="_blank" class="btn btn-y" style="font-size: 22px; display:inline-block; max-width: max-content;">Grab it on Amazon 🛒</a>
+      </div>
+      
+      <div class="ad-right">
+        <div class="ad-overlay" id="adCover">
+          <span style="font-size: 56px; margin-bottom: 12px; display:block;">🔒</span>
+          <button class="ad-unlock-btn" onclick="unlockPromo()">Click to Unlock<br>Secret Loot!</button>
+        </div>
+        
+        <a href="https://amzn.in/d/02kOXjmm" target="_blank" class="ad-book-link">
+          <div class="ad-book">
+            <span style="font-size: 38px; margin-bottom: 8px;">📘</span>
+            <h4 style="font-family: 'Bangers', cursive; font-size: 24px; line-height: 1.1; margin-bottom: 6px; color:var(--ink);">TINY<br>CODERS</h4>
+            <p style="font-size: 11px; font-weight: 900; color: #555;">By Ankit Srivastava</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="ticker"><div class="ticker-inner" id="tinner"></div></div>
+
+<section class="section" id="journey">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag" style="background:var(--yellow)">🗺️ THE ROAD MAP</div>
+      <h2 class="s-title">Your Coding Journey</h2>
+      <p class="s-sub">From "What is an instruction?" to designing real systems — every great coder walked this exact path.</p>
+    </div>
+    <div class="journey">
+
+      <div class="jstep">
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--yellow)">Step 1</span><div class="j-card-title">Instructions &amp; Sequences</div></div>
+          <div class="j-card-body">
+            <p>Everything a computer does starts with <strong>one instruction at a time</strong>. A sequence is a list of steps in exact order — like a recipe or directions to the park. Computers follow sequences perfectly and never skip or guess.</p>
+            <div class="tag-list"><span class="tag" style="background:#FFF9CC">Step-by-step</span><span class="tag" style="background:#FFF9CC">Order matters</span><span class="tag" style="background:#FFF9CC">No ambiguity</span></div>
+          </div>
+        </div>
+        <div class="j-node"><div class="j-dot" style="background:var(--yellow)">📋</div></div>
+        <div class="j-empty"></div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-empty"></div>
+        <div class="j-node"><div class="j-dot" style="background:var(--green)">❓</div></div>
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--green);color:white">Step 2</span><div class="j-card-title">Decisions &amp; Conditions</div></div>
+          <div class="j-card-body">
+            <p>Real programs must <strong>make choices</strong>. "If it is raining, take an umbrella — otherwise wear sunglasses." This YES/NO thinking is called a <strong>conditional</strong> and is the most powerful idea in all of computing.</p>
+            <div class="tag-list"><span class="tag" style="background:#E3FFE8">IF / ELSE</span><span class="tag" style="background:#E3FFE8">True / False</span><span class="tag" style="background:#E3FFE8">Multiple paths</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--blue);color:white">Step 3</span><div class="j-card-title">Loops &amp; Repetition</div></div>
+          <div class="j-card-body">
+            <p>Computers love doing things <strong>over and over</strong> without complaining. A loop says "repeat this until I say stop." Without loops, you'd write the same instruction 1,000 times — loops make you powerful.</p>
+            <div class="tag-list"><span class="tag" style="background:#E8F0FF">REPEAT n times</span><span class="tag" style="background:#E8F0FF">WHILE condition</span><span class="tag" style="background:#E8F0FF">FOR EACH item</span></div>
+          </div>
+        </div>
+        <div class="j-node"><div class="j-dot" style="background:var(--blue)">🔁</div></div>
+        <div class="j-empty"></div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-empty"></div>
+        <div class="j-node"><div class="j-dot" style="background:var(--orange)">📦</div></div>
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--orange);color:white">Step 4</span><div class="j-card-title">Variables &amp; Memory</div></div>
+          <div class="j-card-body">
+            <p>A variable is a <strong>labelled box in the computer's memory</strong>. You put a value in, give it a name, and use or update it later. Score = 0. Collect a coin → Score = Score + 1. That's a variable in action.</p>
+            <div class="tag-list"><span class="tag" style="background:#FFF0E0">Store data</span><span class="tag" style="background:#FFF0E0">Update it</span><span class="tag" style="background:#FFF0E0">Read it back</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--purple);color:white">Step 5</span><div class="j-card-title">Functions &amp; Reuse</div></div>
+          <div class="j-card-body">
+            <p>A function is a <strong>mini-program you name and reuse</strong>. Instead of writing "wash hands" steps every morning, noon and evening — write it once, call it WASH_HANDS, and call it three times. DRY: Don't Repeat Yourself.</p>
+            <div class="tag-list"><span class="tag" style="background:#F0E8FF">Define once</span><span class="tag" style="background:#F0E8FF">Call anywhere</span><span class="tag" style="background:#F0E8FF">DRY principle</span></div>
+          </div>
+        </div>
+        <div class="j-node"><div class="j-dot" style="background:var(--purple)">🛠️</div></div>
+        <div class="j-empty"></div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-empty"></div>
+        <div class="j-node"><div class="j-dot" style="background:var(--pink)">📋</div></div>
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--pink);color:white">Step 6</span><div class="j-card-title">Lists &amp; Collections</div></div>
+          <div class="j-card-body">
+            <p>What if you need to store 100 names? Use a <strong>list</strong> — one box with numbered compartments. Lists let you group related things, search through them, sort them and process every item with a loop.</p>
+            <div class="tag-list"><span class="tag" style="background:#FFE8F0">Collections</span><span class="tag" style="background:#FFE8F0">Index from 0</span><span class="tag" style="background:#FFE8F0">Search &amp; Sort</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--cyan);color:var(--ink)">Step 7</span><div class="j-card-title">Algorithms &amp; Thinking</div></div>
+          <div class="j-card-body">
+            <p>An algorithm is a <strong>smart plan to solve a problem efficiently</strong>. How do you find the biggest number? How do you sort 1,000 names A–Z? Algorithmic thinking solves any problem — in code or in life.</p>
+            <div class="tag-list"><span class="tag" style="background:#E0FDFF">Search</span><span class="tag" style="background:#E0FDFF">Sort</span><span class="tag" style="background:#E0FDFF">Efficiency</span><span class="tag" style="background:#E0FDFF">Optimise</span></div>
+          </div>
+        </div>
+        <div class="j-node"><div class="j-dot" style="background:var(--cyan)">🧠</div></div>
+        <div class="j-empty"></div>
+      </div>
+
+      <div class="jstep">
+        <div class="j-empty"></div>
+        <div class="j-node"><div class="j-dot" style="background:var(--red)">🐛</div></div>
+        <div class="j-card">
+          <div class="j-card-head"><span class="j-step-num" style="background:var(--red);color:white">Step 8</span><div class="j-card-title">Debugging &amp; Problem Solving</div></div>
+          <div class="j-card-body">
+            <p>Every program has bugs — mistakes that make it do the wrong thing. <strong>Debugging is detective work</strong>: find the clue, trace the logic, isolate the problem, fix it. The first real computer bug was an actual moth stuck inside a machine in 1947!</p>
+            <div class="tag-list"><span class="tag" style="background:#FFE8E8">Find the error</span><span class="tag" style="background:#FFE8E8">Test &amp; trace</span><span class="tag" style="background:#FFE8E8">Fix &amp; verify</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section-alt" id="concepts">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag" style="background:var(--blue);color:white">📚 DEEP DIVES</div>
+      <h2 class="s-title">The Big Ideas</h2>
+      <p class="s-sub">Master these concepts and you can build anything — in any language, on any machine, in any era.</p>
+    </div>
+    <div class="concepts-grid">
+
+      <div class="cc">
+        <div class="cc-head" style="background:#FFF9CC">
+          <div class="cc-icon" style="background:var(--yellow)">📋</div>
+          <div><span class="cc-lvl" style="background:var(--yellow)">FOUNDATION</span><div class="cc-title">Sequences</div></div>
+        </div>
+        <div class="cc-body">
+          <p>A computer executes instructions one at a time, in exact order. There is no guessing, no skipping — each step must be crystal clear.</p>
+          <div class="vbox" style="background:#FFFDE7">
+            <strong>🍕 Making pizza — as an algorithm:</strong><br>
+            <div class="frow"><span class="fbox" style="background:#FFD600">1. Preheat oven</span><span class="arrow">→</span><span class="fbox" style="background:#FFD600">2. Spread sauce</span></div>
+            <div class="frow"><span class="fbox" style="background:#FFD600">3. Add toppings</span><span class="arrow">→</span><span class="fbox" style="background:#FFD600">4. Bake 15 min</span></div>
+            <em style="font-size:12px">⚠️ Do step 4 before step 1? Disaster! Order always matters.</em>
+          </div>
+          <div class="pseudo"><span class="kw">START</span><br>&nbsp;&nbsp;MOVE forward 3 steps<br>&nbsp;&nbsp;TURN right<br>&nbsp;&nbsp;MOVE forward 2 steps<br>&nbsp;&nbsp;PICK UP treasure<br><span class="kw">END</span></div>
+          <button class="btn btn-y btn-sm" onclick="xp(10,'📋 Sequences mastered!')">I get it! +10 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#E3FFE8">
+          <div class="cc-icon" style="background:var(--green)">❓</div>
+          <div><span class="cc-lvl" style="background:var(--green);color:white">CORE</span><div class="cc-title">Conditions (IF/ELSE)</div></div>
+        </div>
+        <div class="cc-body">
+          <p>A condition checks if something is TRUE or FALSE, then takes a different path for each answer. This lets programs react to the world.</p>
+          <div class="vbox" style="background:#F0FFF4">
+            <strong>🌧️ Weather decision tree:</strong><br>
+            <div class="frow"><span class="fbox" style="background:#C8F7C5">Is it raining?</span></div>
+            <div class="frow"><span style="color:var(--green);font-weight:900">YES ✓</span><span class="arrow">→</span><span class="fbox" style="background:#C8F7C5">Take umbrella ☂️</span></div>
+            <div class="frow"><span style="color:var(--red);font-weight:900">NO ✗</span><span class="arrow">→</span><span class="fbox" style="background:#C8F7C5">Wear sunglasses 😎</span></div>
+          </div>
+          <div class="pseudo"><span class="kw">IF</span> score &gt;= <span class="val">90</span>:<br>&nbsp;&nbsp;SAY <span class="val">"Outstanding! 🏆"</span><br><span class="kw">ELSE IF</span> score &gt;= <span class="val">60</span>:<br>&nbsp;&nbsp;SAY <span class="val">"Well done! 🌟"</span><br><span class="kw">ELSE</span>:<br>&nbsp;&nbsp;SAY <span class="val">"Keep going! 💪"</span></div>
+          <button class="btn btn-g btn-sm" onclick="xp(10,'❓ Conditions conquered!')">Understood! +10 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#E8F0FF">
+          <div class="cc-icon" style="background:var(--blue)">🔁</div>
+          <div><span class="cc-lvl" style="background:var(--blue);color:white">CORE</span><div class="cc-title">Loops</div></div>
+        </div>
+        <div class="cc-body">
+          <p>Loops tell the computer to repeat a block of instructions — a fixed number of times, or until a condition is met. They are the engine of automation.</p>
+          <div class="vbox" style="background:#EEF3FF">
+            <strong>🌅 Morning routine loop:</strong><br>
+            <div class="frow"><span class="fbox" style="background:#C8D8FF">REPEAT 5 times:</span></div>
+            <div style="padding-left:20px;border-left:4px solid var(--blue);margin:8px 0;font-size:13px">Wake up → Eat → Go to school</div>
+            <div class="frow"><span class="fbox" style="background:#C8D8FF">END REPEAT</span></div>
+          </div>
+          <div class="pseudo"><span class="kw">REPEAT</span> <span class="val">10</span> times:<br>&nbsp;&nbsp;DRAW a star ⭐<br>&nbsp;&nbsp;MOVE right 20px<br><br><span class="kw">WHILE</span> energy &gt; <span class="val">0</span>:<br>&nbsp;&nbsp;PLAY game<br>&nbsp;&nbsp;energy = energy - <span class="val">1</span></div>
+          <button class="btn btn-b btn-sm" onclick="xp(10,'🔁 Loops locked in!')">Loop it! +10 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#FFF0E0">
+          <div class="cc-icon" style="background:var(--orange)">📦</div>
+          <div><span class="cc-lvl" style="background:var(--orange);color:white">CORE</span><div class="cc-title">Variables</div></div>
+        </div>
+        <div class="cc-body">
+          <p>Variables are named containers for data. The value inside can change — that's the point! They let programs remember, update and use information.</p>
+          <div class="vbox" style="background:#FFF5EA">
+            <strong>🎮 Game score example:</strong><br>
+            <div class="frow"><span class="fbox" style="background:#FFE0B2">score = 0</span><span class="arrow">→ collect coin →</span><span class="fbox" style="background:#FFE0B2">score = 1</span></div>
+            <div class="frow"><span class="arrow">→ collect coin →</span><span class="fbox" style="background:#FFE0B2">score = 2</span></div>
+            <em style="font-size:12px">The label stays ("score") but the VALUE inside changes!</em>
+          </div>
+          <div class="pseudo">name = <span class="val">"Priya"</span>   <span class="cmt">← text</span><br>lives = <span class="val">3</span>         <span class="cmt">← number</span><br>hasKey = <span class="val">TRUE</span>     <span class="cmt">← yes/no</span><br><br>lives = lives - <span class="val">1</span>  <span class="cmt">← update!</span></div>
+          <button class="btn btn-sm" style="background:var(--orange);color:white;border:3px solid var(--ink);box-shadow:var(--shadow-sm)" onclick="xp(10,'📦 Variables stored!')">Got it! +10 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#F0E8FF">
+          <div class="cc-icon" style="background:var(--purple)">🛠️</div>
+          <div><span class="cc-lvl" style="background:var(--purple);color:white">INTERMEDIATE</span><div class="cc-title">Functions</div></div>
+        </div>
+        <div class="cc-body">
+          <p>A function is a named block of logic you define once and call many times. Functions take inputs (parameters) and can return outputs — like a machine.</p>
+          <div class="vbox" style="background:#F5F0FF">
+            <strong>🏭 A function is a machine:</strong><br>
+            <div class="frow"><span class="fbox" style="background:#DDD0FF">Input: 5</span><span class="arrow">→</span><span class="fbox" style="background:#C8B8FF">[DOUBLE machine]</span><span class="arrow">→</span><span class="fbox" style="background:#DDD0FF">Output: 10</span></div>
+            <em style="font-size:12px">Same machine, different inputs → different outputs!</em>
+          </div>
+          <div class="pseudo"><span class="kw">DEFINE</span> <span class="fn">greet</span>(name):<br>&nbsp;&nbsp;SAY <span class="val">"Hello, "</span> + name + <span class="val">"!"</span><br><br><span class="fn">greet</span>(<span class="val">"Arjun"</span>)  <span class="cmt">→ "Hello, Arjun!"</span><br><span class="fn">greet</span>(<span class="val">"Riya"</span>)   <span class="cmt">→ "Hello, Riya!"</span></div>
+          <button class="btn btn-p btn-sm" onclick="xp(15,'🛠️ Functions fired up!')">Built one! +15 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#E0FDFF">
+          <div class="cc-icon" style="background:var(--cyan);color:var(--ink)">🧠</div>
+          <div><span class="cc-lvl" style="background:var(--cyan);color:var(--ink)">ADVANCED</span><div class="cc-title">Algorithms</div></div>
+        </div>
+        <div class="cc-body">
+          <p>An algorithm is a step-by-step plan to solve a problem efficiently. The same problem can have many algorithms — some are much faster and smarter than others.</p>
+          <div class="vbox" style="background:#E8FDFF">
+            <strong>🔍 Find the biggest number in a list:</strong><br>
+            <div style="padding-left:8px;border-left:4px solid var(--cyan);margin:8px 0;font-size:13px;font-weight:700">
+              1. Assume the first number is biggest<br>
+              2. Check each other number in order<br>
+              3. If it's bigger, remember it instead<br>
+              4. After all checked → you have the winner!
+            </div>
+            <em style="font-size:12px">Works for 10 numbers or 10 million!</em>
+          </div>
+          <div class="pseudo">biggest = list[<span class="val">0</span>]<br><span class="kw">FOR EACH</span> num <span class="kw">IN</span> list:<br>&nbsp;&nbsp;<span class="kw">IF</span> num &gt; biggest:<br>&nbsp;&nbsp;&nbsp;&nbsp;biggest = num<br>SAY biggest</div>
+          <button class="btn btn-sm" style="background:var(--cyan);border:3px solid var(--ink);box-shadow:var(--shadow-sm)" onclick="xp(20,'🧠 Algorithms activated!')">Cracked it! +20 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#FFE8F0">
+          <div class="cc-icon" style="background:var(--pink)">🔧</div>
+          <div><span class="cc-lvl" style="background:var(--pink);color:white">ADVANCED</span><div class="cc-title">Decomposition</div></div>
+        </div>
+        <div class="cc-body">
+          <p>Break a big, scary problem into smaller manageable pieces. This is how real engineers tackle enormous projects — divide and conquer, always.</p>
+          <div class="vbox" style="background:#FFF0F5">
+            <strong>🎮 Building a game — broken down:</strong><br>
+            <div class="frow"><span class="fbox" style="background:#FFB8D8">"Build a game"</span><span class="arrow">→ too big!</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;font-size:12px;font-weight:800">
+              <div class="fbox" style="background:#FFD6E8">Draw screen</div>
+              <div class="fbox" style="background:#FFD6E8">Move player</div>
+              <div class="fbox" style="background:#FFD6E8">Track score</div>
+              <div class="fbox" style="background:#FFD6E8">Check win</div>
+            </div>
+          </div>
+          <div class="pseudo"><span class="cmt">Big problem → small functions:</span><br><span class="fn">setupGame</span>()<br><span class="fn">drawScreen</span>()<br><span class="fn">movePlayer</span>()<br><span class="fn">checkScore</span>()<br><span class="fn">checkWin</span>()</div>
+          <button class="btn btn-sm" style="background:var(--pink);color:white;border:3px solid var(--ink);box-shadow:var(--shadow-sm)" onclick="xp(20,'🔧 Decomposed!')">Decomposed! +20 XP</button>
+        </div>
+      </div>
+
+      <div class="cc">
+        <div class="cc-head" style="background:#FFE8E8">
+          <div class="cc-icon" style="background:var(--red)">🐛</div>
+          <div><span class="cc-lvl" style="background:var(--red);color:white">ESSENTIAL</span><div class="cc-title">Debugging</div></div>
+        </div>
+        <div class="cc-body">
+          <p>Every coder writes bugs. Debugging is finding exactly WHY something is wrong. Read the error, trace the logic, isolate the problem, then fix it and verify.</p>
+          <div class="vbox" style="background:#FFF5F5">
+            <strong>🔍 Debug detective steps:</strong><br>
+            <div style="padding-left:8px;border-left:4px solid var(--red);margin:8px 0;font-size:13px;font-weight:700">
+              1. 🛑 Read the error message carefully<br>
+              2. 🗺️ Find which line caused it<br>
+              3. 🤔 Expected vs actual — what differs?<br>
+              4. 🔬 Test one small piece at a time<br>
+              5. ✅ Confirm the fix actually works
+            </div>
+          </div>
+          <div class="pseudo"><span class="cmt">❌ BUGGY — spot the error:</span><br><span class="kw">REPEAT</span> <span class="val">5</span> times:<br>&nbsp;&nbsp;SAY score<br>&nbsp;&nbsp;score = score + <span class="val">1</span><br><span class="cmt">↑ score was never set to 0!</span></div>
+          <button class="btn btn-r btn-sm" onclick="xp(15,'🐛 Bug squashed!')">Bug found! +15 XP</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="quiz">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag" style="background:var(--yellow)">🎯 TEST YOURSELF</div>
+      <h2 class="s-title" style="color:var(--yellow)">The Logic Quiz</h2>
+      <p class="s-sub" style="color:rgba(255,255,255,0.7);margin:12px auto 0">10 questions that test real thinking — not memorisation. Reason your way through!</p>
+    </div>
+    <div class="quiz-wrap">
+      <div class="quiz-top">
+        <h3 id="q-title">🎯 Logic Quiz</h3>
+        <span class="quiz-ctr" id="q-ctr">Q 1 / 10</span>
+      </div>
+      <div class="quiz-prog"><div class="quiz-prog-bar" id="q-bar" style="width:0%"></div></div>
+      <div class="quiz-inner">
+        <div class="q-text" id="q-text"></div>
+        <div class="q-opts" id="q-opts"></div>
+        <div class="q-fb" id="q-fb"></div>
+        <div class="quiz-nav">
+          <div class="score-chip">⭐ <span id="q-score">0</span> pts</div>
+          <button class="btn btn-y btn-sm" id="q-next" onclick="nextQ()" style="display:none">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-warm" id="puzzles">
+  <div class="container">
+    <div class="s-head" style="margin-bottom:40px">
+      <div class="s-tag" style="background:var(--orange);color:white">🧩 HANDS-ON</div>
+      <h2 class="s-title">Interactive Puzzles</h2>
+      <p class="s-sub">Four puzzles. Four ways to think. Drag, tap, type and reason your way through.</p>
+    </div>
+  </div>
+  <div class="pz-grid">
+
+    <div class="pz-card">
+      <div class="pz-head" style="background:#E3FFE8">
+        <span class="pz-icon">🤖</span>
+        <div><div class="pz-title">Robot Instructions</div><span class="pz-diff" style="background:#C8F7C5;color:#1A6B38">Sequences · Beginner</span></div>
+      </div>
+      <div class="pz-body">
+        <p>The robot needs to reach the treasure 🏆. Arrange instructions in the right order — drag them from the pool into the sequence zone.</p>
+        <p style="font-size:12px;color:#888;margin-bottom:8px">AVAILABLE — drag these:</p>
+        <div class="drag-pool" id="dp1">
+          <div class="dblock" style="background:#FFD600" draggable="true" data-v="OPEN door">OPEN door</div>
+          <div class="dblock" style="background:#C8F7C5" draggable="true" data-v="MOVE forward">MOVE forward</div>
+          <div class="dblock" style="background:#C8D8FF" draggable="true" data-v="TURN right">TURN right</div>
+          <div class="dblock" style="background:#FFD0B8" draggable="true" data-v="MOVE forward">MOVE forward</div>
+          <div class="dblock" style="background:#FFB8D8" draggable="true" data-v="PICK UP treasure">PICK UP treasure</div>
+        </div>
+        <p style="font-size:12px;color:#888;margin-bottom:8px">YOUR SEQUENCE:</p>
+        <div class="drag-zone" id="dz1" ondragover="event.preventDefault()" ondrop="drop1(event)"></div>
+        <div style="display:flex;gap:8px">
+          <button class="check-btn" style="background:var(--green);color:var(--ink)" onclick="checkSeq()">Check! ✅</button>
+          <button class="check-btn" style="background:#eee;width:auto;padding:12px 16px" onclick="resetSeq()">↺</button>
+        </div>
+        <div class="result" id="r1"></div>
+      </div>
+    </div>
+
+    <div class="pz-card">
+      <div class="pz-head" style="background:#E8F0FF">
+        <span class="pz-icon">🔮</span>
+        <div><div class="pz-title">Pattern Detective</div><span class="pz-diff" style="background:#C8D8FF;color:#042C53">Loops · Beginner</span></div>
+      </div>
+      <div class="pz-body">
+        <p>Loops create patterns! Find what comes NEXT in this repeating sequence. Tap the correct answer below.</p>
+        <div class="pat-grid" id="pg2"></div>
+        <div class="pat-choices" id="pc2"></div>
+        <div class="result" id="r2"></div>
+        <button class="check-btn" style="background:var(--blue);color:white;margin-top:10px" onclick="newPat()">New Pattern 🔄</button>
+      </div>
+    </div>
+
+    <div class="pz-card">
+      <div class="pz-head" style="background:#F5F0FF">
+        <span class="pz-icon">🗺️</span>
+        <div><div class="pz-title">Trace the Logic</div><span class="pz-diff" style="background:#DDD0FF;color:#3A1D8A">Conditions · Medium</span></div>
+      </div>
+      <div class="pz-body">
+        <p>Read the scenario and trace through the IF/ELSE logic. What does the computer output?</p>
+        <div class="fc-story" id="fc-story"></div>
+        <div class="fc-opts" id="fc-opts"></div>
+        <div class="result" id="r3"></div>
+        <button class="check-btn" style="background:var(--purple);color:white;margin-top:10px" onclick="nextFC()">Next Scenario →</button>
+      </div>
+    </div>
+
+    <div class="pz-card">
+      <div class="pz-head" style="background:#FFE8E8">
+        <span class="pz-icon">✏️</span>
+        <div><div class="pz-title">Complete the Algorithm</div><span class="pz-diff" style="background:#FAC5C5;color:#7A0000">Algorithms · Hard</span></div>
+      </div>
+      <div class="pz-body">
+        <p>Fill in the missing keywords to complete this pseudocode algorithm:</p>
+        <div id="fill-q"></div>
+        <button class="check-btn" style="background:var(--red);color:white" onclick="checkFill()">Check Algorithm! 🔍</button>
+        <div class="result" id="r4"></div>
+        <button class="check-btn" style="background:#eee;margin-top:6px" onclick="nextFill()">Next Challenge →</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="challenges">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-tag" style="background:var(--red);color:white">💥 THINK IT</div>
+      <h2 class="s-title">Real-World Challenges</h2>
+      <p class="s-sub">Design the algorithm on paper, in your head, or in plain English. No computer needed — just pure logical thinking.</p>
+    </div>
+    <div class="ch-grid">
+      <div class="ch-card" style="background:#FFF9E0" onclick="xp(5,'🚦 Traffic challenge!')">
+        <span class="ch-icon">🚦</span><h4 class="ch-title">Traffic Light Logic</h4>
+        <p class="ch-desc">Design an algorithm for a traffic light at a busy junction. When should it switch? What if a sensor detects no cars waiting?</p>
+      </div>
+      <div class="ch-card" style="background:#E8FFE8" onclick="xp(5,'📚 Library challenge!')">
+        <span class="ch-icon">📚</span><h4 class="ch-title">Find a Book</h4>
+        <p class="ch-desc">How would you find one book in a library of 10,000? Think of two strategies. Which is faster and why?</p>
+      </div>
+      <div class="ch-card" style="background:#E8F0FF" onclick="xp(5,'🎲 Game challenge!')">
+        <span class="ch-icon">🎲</span><h4 class="ch-title">Dice Game Algorithm</h4>
+        <p class="ch-desc">Write out the algorithm for a two-player dice game: roll, compare scores, decide the winner, handle a tie.</p>
+      </div>
+      <div class="ch-card" style="background:#F5E8FF" onclick="xp(5,'🛒 Shopping challenge!')">
+        <span class="ch-icon">🛒</span><h4 class="ch-title">Smart Shopping Cart</h4>
+        <p class="ch-desc">Design logic for a cart: add items, remove items, calculate total, apply a 10% discount if total exceeds ₹500.</p>
+      </div>
+      <div class="ch-card" style="background:#FFE8E8" onclick="xp(5,'🔒 Password challenge!')">
+        <span class="ch-icon">🔒</span><h4 class="ch-title">Password Checker</h4>
+        <p class="ch-desc">Write an algorithm that scores a password: 8+ chars? Contains a number? Has a capital letter? Rate it weak/medium/strong.</p>
+      </div>
+      <div class="ch-card" style="background:#E0FDFF" onclick="xp(5,'🌡️ Temperature challenge!')">
+        <span class="ch-icon">🌡️</span><h4 class="ch-title">Temperature Advisor</h4>
+        <p class="ch-desc">Given a temperature: below 10°C → wear a coat. 10–25°C → normal clothes. Above 25°C → drink water and stay cool.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand">
+      <h3>CodeKids<br>Universe 🚀</h3>
+      <p>Teaching children to think logically and creatively — free forever for every curious mind on Earth. No languages. No limits. Just logic.</p>
+    </div>
+    <div>
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#journey">The Journey</a></li>
+        <li><a href="#concepts">The Big Ideas</a></li>
+        <li><a href="#quiz">Logic Quiz</a></li>
+        <li><a href="#puzzles">Puzzles</a></li>
+        <li><a href="#challenges">Challenges</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://scratch.mit.edu">Scratch (Visual Coding)</a></li>
+        <li><a href="https://blockly.games">Blockly Games</a></li>
+        <li><a href="https://code.org">Code.org</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Ankit Srivastava · All rights reserved</div>
+</footer>
+
+<div class="bottom-pad"></div>
+<div class="xp-bar">
+  <span class="xp-label">🏆 XP</span>
+  <div class="xp-track"><div class="xp-fill" id="xf" style="width:0%"></div></div>
+  <span class="xp-lvl" id="xl">Lv 1 · 0 XP</span>
+  <span class="xp-stars" id="xs">☆☆☆☆☆</span>
+</div>
+<div class="xp-popup" id="xpp"></div>
+
+<script>
+// TICKER
+const tw=['🧠 THINK LOGICALLY · ','🔁 MASTER LOOPS · ','❓ MAKE DECISIONS · ','📦 USE VARIABLES · ','🛠️ BUILD FUNCTIONS · ','🐛 SQUASH BUGS · ','🔍 FIND PATTERNS · ','💡 SOLVE PROBLEMS · '];
+const t=document.getElementById('tinner');const s=tw.join('');
+t.innerHTML=`<span class="ticker-item">${s+s}</span><span class="ticker-item" aria-hidden="true">${s+s}</span>`;
+
+// XP
+let totalXP=0;
+function xp(a,msg){
+  totalXP+=a;
+  const pct=totalXP%100,lv=Math.floor(totalXP/100)+1,st=Math.min(5,Math.floor(totalXP/50));
+  document.getElementById('xf').style.width=pct+'%';
+  document.getElementById('xl').textContent=`Lv ${lv} · ${totalXP} XP`;
+  document.getElementById('xs').textContent='★'.repeat(st)+'☆'.repeat(5-st);
+  const p=document.getElementById('xpp');
+  p.textContent=`${msg}  +${a} XP!`;p.style.display='block';
+  setTimeout(()=>p.style.display='none',2400);
+}
+
+// OBSERVER
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:0.1});
+document.querySelectorAll('.jstep,.cc,.ch-card').forEach(el=>io.observe(el));
+
+// PROMO AD INTERACTION
+function unlockPromo() {
+  document.getElementById('adCover').classList.add('unlocked');
+  xp(50, '🔓 Legendary Loot Unlocked!');
+}
+
+// QUIZ DATA
+const Qs=[
+  {e:'📋',q:'A computer follows steps in a recipe. You run step 3 before step 1. What happens?',opts:['It works fine','The result is wrong or it crashes','It skips the bad step','Nothing changes'],ans:1,ex:'Computers follow steps in EXACT order — no guessing! Swap steps and the whole thing breaks, like baking a cake without preheating the oven.'},
+  {e:'❓',q:'An IF condition checks "Is the door locked?" — the door is NOT locked. Which block runs?',opts:['The IF block','Nothing runs','The ELSE block','The program stops'],ans:2,ex:'IF checks a condition. If it is FALSE (not locked), the ELSE block runs. Two possible paths — one is chosen!'},
+  {e:'🔁',q:'REPEAT WHILE score < 10. Score starts at 0 and increases by 1 each time. How many times does it repeat?',opts:['9 times','10 times','11 times','Forever'],ans:1,ex:'It runs for scores 0,1,2,3,4,5,6,7,8,9 — that is 10 times. When score hits 10 the condition becomes false and the loop stops.'},
+  {e:'📦',q:'score = 5. Then: score = score + 3. Then: score = score × 2. Final score?',opts:['8','10','16','18'],ans:2,ex:'5 + 3 = 8. Then 8 × 2 = 16. Each line uses the CURRENT value, not the original!'},
+  {e:'🛠️',q:'Why use a function instead of copying the same logic in 3 places?',opts:['Functions type faster','Fix a bug once and it is fixed everywhere automatically','Functions use less memory','Computers demand functions'],ans:1,ex:'DRY — Don\'t Repeat Yourself! Fix a bug in one function and it is fixed everywhere. Copy-paste means fixing it in 3 places and forgetting one.'},
+  {e:'🧠',q:'You need to find ONE name in a sorted list of 1,000. Which approach is best?',opts:['Start from the middle randomly','Check every name from the start','Sort first, then cut the list in half repeatedly','Guess randomly'],ans:2,ex:'Binary Search on a sorted list is dramatically faster! Start in the middle — ignore the irrelevant half each time. Find the answer in just 10 steps on a list of 1,000!'},
+  {e:'🐛',q:'Your loop should print numbers 1 to 5 but prints nothing at all. Most likely cause?',opts:['Too many iterations','The start condition means it never begins','Print command missing','Numbers too large'],ans:1,ex:'If the condition is wrong from the start (e.g. WHILE 0 > 5), the loop body never runs at all. Always verify your starting values!'},
+  {e:'🔧',q:'You are designing a big game. Which is the correct first step?',opts:['Write all the code at once','Break it down: screen, player, score, win — build each piece','Hope for the best','Copy another game'],ans:1,ex:'Decomposition! "Build a game" is too vague. "Draw the player on screen" is specific enough to tackle. Solve small pieces then combine them.'},
+  {e:'📋',q:'What three things does a useful algorithm need?',opts:['A specific coding language','Clear steps, a definite end, and the correct result','At least 50 steps','To be written by an expert'],ans:1,ex:'A good algorithm is: (1) Unambiguous — clear instructions, (2) Finite — it eventually stops, (3) Correct — right answer. Language never matters!'},
+  {e:'🔁',q:'What is the key difference between FOR and WHILE loops?',opts:['No real difference','FOR runs a set number of times; WHILE runs until a condition becomes false','WHILE is always faster','FOR can only count upward'],ans:1,ex:'FOR: "do this exactly 10 times". WHILE: "keep doing this UNTIL the door is open" — you don\'t know the count in advance. Right tool for the right job!'},
+];
+
+let qi=0,qs=0,qa=false;
+function loadQ(){
+  const q=Qs[qi];
+  document.getElementById('q-title').textContent=`🎯 Question ${qi+1} of ${Qs.length}`;
+  document.getElementById('q-ctr').textContent=`Q ${qi+1} / ${Qs.length}`;
+  document.getElementById('q-bar').style.width=(qi/Qs.length*100)+'%';
+  document.getElementById('q-text').innerHTML=`<span class="q-em">${q.e}</span>${q.q}`;
+  const ol=document.getElementById('q-opts');ol.innerHTML='';
+  qa=false;document.getElementById('q-fb').className='q-fb';document.getElementById('q-next').style.display='none';
+  'ABCD'.split('').forEach((l,i)=>{
+    const b=document.createElement('button');b.className='q-opt';
+    b.innerHTML=`<span class="q-letter">${l}</span>${q.opts[i]}`;
+    b.onclick=()=>ansQ(i,b);ol.appendChild(b);
+  });
+}
+function ansQ(idx,btn){
+  if(qa)return;qa=true;
+  const q=Qs[qi];
+  document.querySelectorAll('.q-opt').forEach((o,i)=>{if(i===q.ans)o.classList.add('correct')});
+  const fb=document.getElementById('q-fb');
+  if(idx===q.ans){btn.classList.add('correct');fb.className='q-fb show good';fb.innerHTML='🎉 Correct! '+q.ex;qs+=10;document.getElementById('q-score').textContent=qs;xp(10,'🎯 Correct!');}
+  else{btn.classList.add('wrong');fb.className='q-fb show bad';fb.innerHTML='❌ Not quite. '+q.ex;}
+  document.getElementById('q-next').style.display='inline-block';
+}
+function nextQ(){qi=(qi+1)%Qs.length;loadQ();}
+loadQ();
+
+// DRAG PUZZLE
+let dragging=null;
+document.querySelectorAll('#dp1 .dblock').forEach(b=>{
+  b.addEventListener('dragstart',()=>{dragging=b;setTimeout(()=>b.style.opacity='0.4',0)});
+  b.addEventListener('dragend',()=>{if(dragging)dragging.style.opacity='1';dragging=null});
+});
+function drop1(e){
+  e.preventDefault();
+  if(!dragging||dragging.classList.contains('used'))return;
+  const c=dragging.cloneNode(true);c.draggable=false;
+  document.getElementById('dz1').appendChild(c);
+  dragging.classList.add('used');
+}
+function checkSeq(){
+  const placed=[...document.getElementById('dz1').children].map(c=>c.dataset.v);
+  const correct=['OPEN door','MOVE forward','TURN right','MOVE forward','PICK UP treasure'];
+  const r=document.getElementById('r1');
+  if(!placed.length){r.className='result show lose';r.innerHTML='⚠️ Drag some instructions first!';return}
+  if(JSON.stringify(placed)===JSON.stringify(correct)){r.className='result show win';r.innerHTML='🏆 Perfect! The robot opens the door, navigates, and grabs the treasure! +30 XP';xp(30,'🤖 Sequence solved!');}
+  else{r.className='result show lose';r.innerHTML='🤔 Not quite! Think: the robot cannot move through a closed door. What must happen first?';}
+}
+function resetSeq(){
+  document.getElementById('dz1').innerHTML='';
+  document.querySelectorAll('#dp1 .dblock').forEach(b=>{b.classList.remove('used');b.style.opacity='1';b.draggable=true});
+  document.getElementById('r1').className='result';
+}
+
+// PATTERN PUZZLE
+const pats=[
+  {seq:['🌟','🌙','🌟','🌙','🌟'],ans:'🌙',wrong:['☀️','⭐','💫']},
+  {seq:['🔴','🔵','🟡','🔴','🔵'],ans:'🟡',wrong:['🟢','⚫','🟣']},
+  {seq:['🐱','🐶','🐱','🐶','🐱'],ans:'🐶',wrong:['🐦','🐠','🦊']},
+  {seq:['⬆️','➡️','⬇️','⬆️','➡️'],ans:'⬇️',wrong:['⬅️','↗️','↘️']},
+  {seq:['🍎','🍌','🍇','🍎','🍌'],ans:'🍇',wrong:['🍓','🍑','🥭']},
+];
+let curP=0;
+function loadPat(){
+  const p=pats[curP];
+  const g=document.getElementById('pg2');g.innerHTML='';
+  p.seq.forEach(s=>{const c=document.createElement('div');c.className='pat-cell';c.textContent=s;g.appendChild(c)});
+  const b=document.createElement('div');b.className='pat-cell pat-blank';b.textContent='?';g.appendChild(b);
+  const ch=document.getElementById('pc2');ch.innerHTML='';
+  [...new Set([p.ans,...p.wrong])].sort(()=>Math.random()-0.5).forEach(o=>{
+    const btn=document.createElement('div');btn.className='pat-choice';btn.textContent=o;
+    btn.onclick=()=>{btn.classList.add('picked');const r=document.getElementById('r2');
+      if(o===p.ans){r.className='result show win';r.innerHTML='🎉 Correct! Repeating patterns are exactly how loops work in code! +25 XP';xp(25,'🔮 Pattern found!');const bl=document.querySelector('#pg2 .pat-blank');if(bl)bl.textContent=p.ans;}
+      else{r.className='result show lose';r.innerHTML='❌ Look carefully at what repeats. Count positions — the pattern restarts after a cycle!';}}
+    ch.appendChild(btn);
+  });
+  document.getElementById('r2').className='result';
+}
+function newPat(){curP=(curP+1)%pats.length;loadPat();}
+loadPat();
+
+// FLOWCHART PUZZLE
+const FCs=[
+  {story:'🎮 A game checks: playerLives > 0? YES → then checks: hasKey? YES → "Open chest!" What output if lives=2 and hasKey=TRUE?',opts:['"Game Over"','"Open chest!" ✅','"Restart game"','Nothing'],ans:1,ex:'Both conditions are TRUE — follow YES twice → Open chest!'},
+  {story:'🌡️ IF temperature > 35: print "Too hot!". ELSE IF temperature < 10: print "Too cold!". ELSE: print "Perfect!". Temperature = 22. What prints?',opts:['"Too hot!"','"Too cold!"','"Perfect!" ✅','Nothing'],ans:2,ex:'22 is not > 35 and not < 10. Neither IF nor ELSE-IF is true, so we fall to ELSE → "Perfect!"'},
+  {story:'🔢 score = 0. REPEAT 4 times: score = score + 5. What is score at the end?',opts:['4','5','15','20 ✅'],ans:3,ex:'0+5=5, 5+5=10, 10+5=15, 15+5=20. The loop ran 4 times exactly!'},
+  {story:'🔐 Login: IF username="admin" AND password="1234" → "Access Granted". User types username="admin" but password="0000". What happens?',opts:['Access Granted','Access Denied ✅','Password ignored','Username is wrong'],ans:1,ex:'AND requires BOTH conditions to be true. Password is wrong → whole condition is FALSE → access denied!'},
+];
+let fcIdx=0;
+function loadFC(){
+  const fc=FCs[fcIdx];
+  document.getElementById('fc-story').textContent=fc.story;
+  const oc=document.getElementById('fc-opts');oc.innerHTML='';
+  fc.opts.forEach((o,i)=>{
+    const b=document.createElement('button');b.className='fc-opt';b.textContent=o;
+    b.onclick=()=>{
+      document.querySelectorAll('.fc-opt').forEach((x,j)=>{if(j===fc.ans)x.classList.add('sel-y')});
+      const r=document.getElementById('r3');
+      if(i===fc.ans){b.classList.add('sel-y');r.className='result show win';r.innerHTML='✅ Correct! '+fc.ex+' +20 XP';xp(20,'🗺️ Flowchart traced!');}
+      else{b.classList.add('sel-n');r.className='result show lose';r.innerHTML='❌ '+fc.ex;}
+    };oc.appendChild(b);
+  });
+  document.getElementById('r3').className='result';
+}
+function nextFC(){fcIdx=(fcIdx+1)%FCs.length;loadFC();}
+loadFC();
+
+// FILL IN BLANK
+const fills=[
+  {lines:[
+    {t:'<span class="kw">DEFINE</span> <span class="fn">findBiggest</span>(list):',type:'code'},
+    {t:'&nbsp;&nbsp;biggest = list[',blank:'0',after:']',type:'fill'},
+    {t:'&nbsp;&nbsp;<span class="kw">FOR EACH</span> num <span class="kw">IN</span> list:',type:'code'},
+    {t:'&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">IF</span> num >',blank:'biggest',after:':',type:'fill'},
+    {t:'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;biggest = num',type:'code'},
+    {t:'&nbsp;&nbsp;<span class="kw">RETURN</span> biggest',type:'code'},
+  ],hint:'Start by assuming index 0 is biggest. Update whenever you find something larger.'},
+  {lines:[
+    {t:'<span class="cmt"># Count down from 10 to 1</span>',type:'code'},
+    {t:'count =',blank:'10',after:'',type:'fill'},
+    {t:'<span class="kw">WHILE</span> count >',blank:'0',after:':',type:'fill'},
+    {t:'&nbsp;&nbsp;SAY count',type:'code'},
+    {t:'&nbsp;&nbsp;count = count -',blank:'1',after:'',type:'fill'},
+  ],hint:'Start at 10, print it, decrease by 1 each loop, stop when you hit 0.'},
+  {lines:[
+    {t:'<span class="cmt"># Grade calculator</span>',type:'code'},
+    {t:'<span class="kw">IF</span> score >=',blank:'90',after:':',type:'fill'},
+    {t:'&nbsp;&nbsp;SAY <span class="val">"Grade A"</span>',type:'code'},
+    {t:'<span class="kw">ELSE IF</span> score >=',blank:'60',after:':',type:'fill'},
+    {t:'&nbsp;&nbsp;SAY <span class="val">"Grade B"</span>',type:'code'},
+    {t:'<span class="kw">ELSE</span>:',type:'code'},
+    {t:'&nbsp;&nbsp;SAY <span class="val">"',blank:'Needs work',after:'"</span>',type:'fill'},
+  ],hint:'A = 90+, B = 60+, anything else needs more practice.'},
+];
+let fillIdx=0;
+function loadFill(){
+  const fq=fills[fillIdx];
+  const qc=document.getElementById('fill-q');qc.innerHTML='';
+  const hp=document.createElement('p');hp.style.cssText='font-size:13px;font-weight:700;color:#888;margin-bottom:10px';hp.textContent='💡 '+fq.hint;qc.appendChild(hp);
+  const bl=document.createElement('div');bl.className='code-fill';
+  fq.lines.forEach((ln,li)=>{
+    const d=document.createElement('div');
+    if(ln.type==='code'){d.innerHTML=ln.t;}
+    else{d.innerHTML=`${ln.t}<input class="blank" id="fi${li}" data-ans="${ln.blank}" placeholder="???" style="width:${Math.max(60,ln.blank.length*11)}px">${ln.after}`;}
+    bl.appendChild(d);
+  });qc.appendChild(bl);
+  document.getElementById('r4').className='result';
+}
+function checkFill(){
+  const inputs=document.querySelectorAll('.blank');let all=true;
+  inputs.forEach(inp=>{const ok=inp.value.trim().toLowerCase()===inp.dataset.ans.toLowerCase();inp.classList.toggle('ok',ok);inp.classList.toggle('err',!ok);if(!ok)all=false;});
+  const r=document.getElementById('r4');
+  if(all){r.className='result show win';r.innerHTML='🏆 Perfect! Every blank correct — this algorithm would actually work! +35 XP';xp(35,'✏️ Algorithm complete!');}
+  else{r.className='result show lose';r.innerHTML='❌ Some blanks are wrong (red). Re-read the hint and trace the logic step by step.';}
+}
+function nextFill(){fillIdx=(fillIdx+1)%fills.length;loadFill();}
+loadFill();
+</script>
+</body>
+</html>
